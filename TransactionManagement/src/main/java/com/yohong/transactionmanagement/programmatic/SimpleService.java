@@ -19,7 +19,8 @@ public class SimpleService {
 		
 		// the transaction settings can be set here explicitly if so desired
 		this.transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_UNCOMMITTED);
-		this.transactionTemplate.setTimeout(30); // 30 seconds
+		// 30 seconds
+		this.transactionTemplate.setTimeout(30);
 		// and so forth...
 	}
 	public Object someServiceMethod() {
@@ -33,18 +34,10 @@ public class SimpleService {
 		});
 	}
 	
-	
 	public Object doSomeThing(){
 		
 		// If there is no return value, you can use the convenient TransactionCallbackWithoutResult class with an anonymous class, as follows:
 		
-		
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				// updateOperation1();
-				// updateOperation2();
-			}
-		});
 		
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			// Code within the callback can roll the transaction back by calling the setRollbackOnly() method on the supplied TransactionStatus object, as follows:
@@ -55,6 +48,21 @@ public class SimpleService {
 				} catch (Exception ex) {
 					status.setRollbackOnly();
 				}
+			}
+		});
+		
+		// get Result
+		Object object = this.transactionTemplate.execute(new TransactionCallback<Object>() {
+			@Override
+			public Object doInTransaction(TransactionStatus status) {
+				try {
+					// updateOperation1();
+					// updateOperation2();
+				} catch (Exception ex) {
+					status.setRollbackOnly();
+				}
+				
+				return null;
 			}
 		});
 		
