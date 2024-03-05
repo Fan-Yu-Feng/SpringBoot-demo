@@ -14,6 +14,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -63,6 +64,10 @@ public class VideoRecorderTest {
 	 */
 	@Test
 	public void recordTest() throws AWTException, InterruptedException, FFmpegFrameRecorder.Exception {
+		File file = new File(screenFilePath);
+		if(!file.exists()){
+			file.mkdirs();
+		}
 		// 获取当前时间
 		LocalDateTime currentTime = LocalDateTime.now();
 		// 格式化当前时间为字符串
