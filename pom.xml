@@ -92,6 +92,7 @@
     <modules>
         <!-- 默认使用2.x教程下的工程，如果要用1.x的可修改下面的module -->
         <module>TransactionManagement</module>
+        <module>demo</module>
     </modules>
 
 
