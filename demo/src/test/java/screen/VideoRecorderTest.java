@@ -140,7 +140,7 @@ public class VideoRecorderTest {
 		}
 		
 		// 线程睡眠5S 录制5S
-		Thread.sleep(1000 * 30);
+		Thread.sleep(1000 * 60);
 		log.info("执行完任务");
 		isStop = true;
 		Thread.sleep(1000 * 10);
@@ -151,19 +151,21 @@ public class VideoRecorderTest {
 	private FFmpegFrameRecorder buildRecord(FFmpegFrameRecorder recorder) throws FFmpegFrameRecorder.Exception {
 		
 		recorder.setVideoQuality(0);
-		recorder.setVideoOption("preset", "slow");
-		recorder.setVideoCodec(avcodec.AV_CODEC_ID_MPEG4); // 13
+		recorder.setVideoOption("preset", "veryslow");
+		recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264); // 13
 		recorder.setFormat("mp4");
 		// recorder.setFormat("mov,mp4,m4a,3gp,3g2,mj2,h264,ogg,MPEG4");
 		recorder.setSampleRate(44100);
 		recorder.setFrameRate(frameRate);
 		recorder.setVideoOption("crf", "23");
-		// 2000 kb/s, 720P视频的合理比特率范围 调整低了就改变画质，降低文件的大小
-		recorder.setVideoBitrate(50000); // 500 kbps
+		// 2000 kb/s, 720P视频的合理比特率范围 调整低了就改变画质，降低文件的大小 2Kbs= 20000
+		recorder.setVideoBitrate(500000); // 500 kbps
 		recorder.setPixelFormat(0); // yuv420p = 0
 		recorder.start();
 		return recorder;
 	}
+	
+	
 	
 	
 }
